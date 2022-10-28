@@ -49,11 +49,15 @@ def write_new_dict(dict_files: Iterable[str], syllable_map: dict[str, str]) -> N
                     try:
                         parts = line.split('\t')
                         word = parts[1]
+                        unspaced = '=' in word
+                        if unspaced:
+                            word = word.replace('=', ' ')
                         syllables: list[str] = word.split(' ')
                         for j, syllable in enumerate(syllables):
                             syllable = syllable.strip()
                             syllables[j] = syllable_map[syllable]
-                        word = ' '.join(syllables)
+                        word = '='.join(
+                            syllables) if unspaced else ' '.join(syllables)
                         parts[1] = word
                         new_line = '\t'.join(parts) + '\n'
                         new_line = new_line.replace('\n\n', '\n')
@@ -66,13 +70,13 @@ def main(debug: bool = False):
     syllable_map = get_syllable_map('syllable_map.csv')
     if debug:
         all_tupa_syllables = get_unique_tupa_syllables(
-            ['../tupa.dict.yaml', '../tupa.words.dict.yaml'])
+            ['../tupa.dict.yaml', '../tupa.words.dict.yaml', '../tupa_unspaced.dict.yaml'])
         keys = syllable_map.keys()
         for syllable in all_tupa_syllables:
             if not syllable in keys:
                 print(f'Missing syllable: {syllable}')
     write_new_dict(
-        ['../tupa.dict.yaml', '../tupa.words.dict.yaml'], syllable_map)
+        ['../tupa.dict.yaml', '../tupa.words.dict.yaml', '../tupa_unspaced.dict.yaml'], syllable_map)
 
 
 main()
