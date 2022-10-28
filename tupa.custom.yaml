@@ -1,0 +1,36 @@
+patch:
+  filters:
+    - simplifier@zh_simp
+    - simplifier@zh_simpo
+    - simplifier@t2koutt
+    - uniquifier
+    - reverse_lookup_filter@tupa_reverse_lookup
+
+  switches:
+    - name: ascii_mode
+      reset: 0
+      states: [中文, 西文]
+    - name: full_shape
+      states: [半角, 全角]
+    # - name: simplification
+    #   states: [漢字, 汉字]
+    - options: [zh_simpo, t2koutt, zh_simp, zh_trad]
+      states:
+        - 字形 → 折中字
+        - 字形 → 正軆字
+        - 字形 → 简化字
+        - 字形 → 傳承字
+    - name: ascii_punct
+      states: [。，, ．，]
+
+  zh_simp:
+    option_name: zh_simp
+    opencc_config: t2s.json
+
+  zh_simpo:
+    option_name: zh_simpo
+    opencc_config: t2so.json
+
+  t2koutt:
+    option_name: t2koutt
+    opencc_config: t2koutt.json
