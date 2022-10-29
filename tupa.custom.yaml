@@ -1,11 +1,4 @@
 patch:
-  filters:
-    - simplifier@zh_simp
-    - simplifier@zh_simpo
-    - simplifier@t2koutt
-    - uniquifier
-    - reverse_lookup_filter@tupa_reverse_lookup
-
   switches:
     - name: ascii_mode
       reset: 0
@@ -20,8 +13,16 @@ patch:
         - 字形 → 正軆字
         - 字形 → 简化字
         - 字形 → 傳承字
+      reset: 0
     - name: ascii_punct
       states: [。，, ．，]
+
+  engine/filters:
+    - simplifier@zh_simp
+    - simplifier@zh_simpo
+    - simplifier@t2koutt
+    - uniquifier
+    - reverse_lookup_filter@tupa_reverse_lookup
 
   zh_simp:
     option_name: zh_simp
